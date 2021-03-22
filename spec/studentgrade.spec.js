@@ -19,15 +19,15 @@ describe("GRADING TEST: ", function() {
    });
 
    it("Responds to TA message & commands", function() {
-    let rover = new Rover(100);
+   let rover = new Rover(100);
     let commands = [
-       new Command('MOVE', 4321),
+      new Command('MOVE', 4321),
        new Command('STATUS_CHECK'),
        new Command('MODE_CHANGE', 'LOW_POWER'),
        new Command('MOVE', 3579),
        new Command('STATUS_CHECK')
     ];
-    let message = new Message('TA power', commands);
+   let message = new Message('TA power', commands);
     let response = rover.receiveMessage(message);
     expect(response.message).toEqual('TA power');
     expect(response.results[0].completed).toBeTrue;
