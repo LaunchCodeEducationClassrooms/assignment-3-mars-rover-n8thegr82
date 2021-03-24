@@ -60,7 +60,6 @@ it('responds with false completed value when attempting to move in LOW_POWER mod
 
 });
 
-
 it('responds with position for move command',function(){
 
 let command = new Command('MOVE');
