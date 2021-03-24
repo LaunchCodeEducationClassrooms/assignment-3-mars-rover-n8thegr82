@@ -41,30 +41,46 @@ expect (response.message).toEqual('Two commands sent')
 });
 
 it('responds correctly to status check command',function(){
-    let command = new Command('STATUS_CHECK');
-    expect(command.commandType).toEqual('STATUS_CHECK');
+
+  let commands = [new Command('STATUS_CHECK')]; 
+let message = new Message('Commands sent', commands);
+let rover = new Rover(98382); 
+let response = rover.receiveMessage(message);
+expect(response.results[0].completed).toEqual(true)
 });
 
 it('responds correctly to mode change command',function(){
 
-      let command = new Command('MODE_CHANGE');
-    expect(command.commandType).toEqual('MODE_CHANGE');
+  let commands = [new Command('MODE_CHANGE')]; 
+let message = new Message('Commands sent', commands);
+let rover = new Rover(98382); 
+let response = rover.receiveMessage(message);
+expect(response.results[0].completed).toEqual(true)
+
 });
 
 
 it('responds with false completed value when attempting to move in LOW_POWER mode',function(){
-  let command = new Command('LOW_POWER');
-    expect(command.commandType).toEqual('LOW_POWER');
+ 
 
+
+let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('MOVE', 1)]; 
+let message = new Message('Two commands sent', commands);
+let rover = new Rover(98382); 
+let response = rover.receiveMessage(message);
+expect(response.results[1].completed).toEqual(false)
    
 
 });
 
 it('responds with position for move command',function(){
 
-let command = new Command('MOVE');
-  expect(command.commandType).toEqual('MOVE');
 
+  let commands = [new Command('MOVE',2),new Command('STATUS_CHECK')]; 
+let message = new Message('Commands sent', commands);
+let rover = new Rover(98382); 
+let response = rover.receiveMessage(message);
+expect(response.results[1].roverStatus.position).toEqual(2)
 
 
 });
