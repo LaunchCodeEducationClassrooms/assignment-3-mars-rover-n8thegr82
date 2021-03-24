@@ -8,6 +8,78 @@ const Command = require('../command.js');
 
 describe("Rover class", function() {
 
+
+
   // 7 tests here!
+it('constructor sets position and default values for mode and generatorWatts',function(){
+  let rover = new Rover(87382098);
+expect(rover.position).toEqual(87382098)
+expect(rover.generatorWatts).toEqual(110)
+expect(rover.mode).toEqual('NORMAL')
+
+  });
+
+
+it('response returned by receiveMessage contains name of message',function(){
+let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+let message = new Message('Test message with two commands', commands);
+let rover = new Rover(98382);   
+let response = rover.receiveMessage(message);
+expect (response.message).toEqual('Test message with two commands')
+
 
 });
+
+
+it('response returned by receiveMessage includes two results if two commands are sent in the message',function(){
+let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')]; 
+let message = new Message('Two commands sent', commands);
+let rover = new Rover(98382); 
+let response = rover.receiveMessage(message);
+expect (response.message).toEqual('Two commands sent')
+
+});
+
+it('responds correctly to status check command',function(){
+    let command = new Command('STATUS_CHECK');
+    expect(command.commandType).toEqual('STATUS_CHECK');
+});
+
+it('responds correctly to mode change command',function(){
+
+      let command = new Command('MODE_CHANGE');
+    expect(command.commandType).toEqual('MODE_CHANGE');
+});
+
+
+it('responds with false completed value when attempting to move in LOW_POWER mode',function(){
+  let command = new Command('LOW_POWER');
+    expect(command.commandType).toEqual('LOW_POWER');
+
+   
+
+});
+
+it('responds with position for move command',function(){
+
+let command = new Command('MOVE');
+  expect(command.commandType).toEqual('MOVE');
+
+
+
+});
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
